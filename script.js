@@ -24,24 +24,29 @@ $(document).ready(() => {
   };
   
 
-  const addMessage = (message) => {
+  const addMessage = (message, buttonClicked) => {
     if (message.trim() !== '') {
-      const messages = $('<div>').addClass('col-4 offset-4 mb-2 rounded-bottom');
-      const messageParts = message.split(/\s+/);
-      messageParts.forEach((part) => {
-        if (youtube(part)) 
-          messages.append(embedLink(part));
-        else 
-          messages.append(document.createTextNode(part + ' '));
-      });
+        const messages = $('<div>').addClass('col-4 offset-4 mb-2 rounded-bottom');
+        const messageParts = message.split(/\s+/);
+        messageParts.forEach((part) => {
+            if (youtube(part)) 
+            messages.append(embedLink(part));
+            else 
+            messages.append(document.createTextNode(part + ' '));
+        });
 
-      $('.messages').prepend(messages);
-      $('#message').val('');
+        if (buttonClicked === 'left')
+            messages.css('background-color', 'grey');
+        else if (buttonClicked === 'right')
+            messages.css('background-color', 'lightblue');
+        
+        $('.messages').prepend(messages);
+        $('#message').val('');
     }
   };
 
   $(document).on('click', '.submit', () => {
-    const message = $('#message').val(); //value of message
-    addMessage(message); //call message
+    // const message = $('#message').val(); //value of message
+    addMessage($('#message').val()), $(this).attr('id'); //call message
   });
 });
